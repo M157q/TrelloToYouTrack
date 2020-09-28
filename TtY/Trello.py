@@ -81,10 +81,18 @@ class Trello:
     def _get_members(self, cards):
         for card in cards:
             if card["idMembers"]:
-                members_response = requests.get('https://api.trello.com/1/cards/%s/members'
-                                                '?fields=username&key=%s&token=%s' % (card["id"],
-                                                                                      self.trello_key,
-                                                                                      self.trello_token))
+                members_response = requests.get(
+                    (
+                        'https://api.trello.com/1/cards/%s/members'
+                        '?fields=username&key=%s&token=%s' %
+                        (
+                            card["id"],
+                            self.trello_key,
+                            self.trello_token,
+                        )
+                    )
+                )
+                print(members_response)
                 card["members"] = members_response.json()
 
     def _get_comments(self, cards):
