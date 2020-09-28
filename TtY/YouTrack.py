@@ -64,8 +64,13 @@ class YouTrack:
             if attachments:
                 card_attachments = []
                 for attachment in card["attachments"]:
-                    response = requests.get(attachment["url"])
-                    card_attachments.append((attachment["name"], response.content))
+                    try:
+                        response = requests.get(attachment["url"])
+                    except Exception:
+                        continue
+                    else:
+                        card_attachments.append((attachment["name"], response.content))
+
                 if card_attachments:
                     attachments_dict[self.youtrack_project + '-' + unicode(number_in_project)] \
                         = card_attachments
