@@ -20,12 +20,15 @@ class YouTrack:
                                                                number_in_project)
         xml_string += issues_strings
         xml_string += '</issues>'
+        print(xml_string.encode('utf-8'))
 
         import_url = '%s/rest/import/%s/issues' % (self.youtrack_link, self.youtrack_project)
         headers = {'Content-Type': 'application/xml'}
 
         response = requests.put(import_url, auth=(self.youtrack_login, self.youtrack_password),
                                 headers=headers, data=xml_string.encode('utf-8'))
+        print(response.status_code)
+        print(response.content)
 
         print '√ Done Importing cards to Youtrack'
         print 'Importing attachments...'
@@ -41,8 +44,14 @@ class YouTrack:
         xml_string += '</list>\n'
 
         headers = {'Content-Type': 'application/xml'}
-        response = requests.put(self.youtrack_link + "/rest/import/users", data=xml_string.decode('utf-8'),
-                                headers=headers, auth=(self.youtrack_login, self.youtrack_password))
+        response = requests.put(
+            self.youtrack_link + "/rest/import/users",
+            data=xml_string.decode('utf-8'),
+            headers=headers,
+            auth=(self.youtrack_login, self.youtrack_password),
+        )
+        print(response.status_code)
+        print(response.content)
 
     def _issues_string(self, trello_cards, mapping_dict, attachments, comments, number_in_project):
         issue_string = '\n'
@@ -72,6 +81,8 @@ class YouTrack:
                                          (issue_name, self.youtrack_login, self._time_now()),
                                          files={'file': file_data},
                                          auth=(self.youtrack_login, self.youtrack_password))
+                print(response.status_code)
+                print(response.content)
 
     def _get_issue_fields(self, mapping_dict, card, comments, number_in_project):
         fields = ''
