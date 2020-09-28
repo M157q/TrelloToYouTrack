@@ -65,6 +65,7 @@ class Trello:
         # TODO check getting comments too.
         request_url += "&key=%s&token=%s" % (self.trello_key, self.trello_token)
         response = requests.get(request_url)
+        print(response.content)
 
         self.cards = response.json()
         if self.users:
