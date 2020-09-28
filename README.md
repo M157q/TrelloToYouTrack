@@ -11,12 +11,16 @@ The rules for this file:
     - trello.key
     - trello.token
     - youtrack.login
+        - Just use the username, no need to use entire email.
     - youtrack.password
     - youtrack.link
     - trello.board
     - trello.list
     - youtrack.project
-    - youtrack.startNumberInProject"
+        - Use Project ID not Name, you can check it in the settings of the target project.
+    - youtrack.startNumberInProject
+        - Set this to 1, then the start number of the imported issues will be 1, 2, ...
+        - If there is already has a issue with this number, this script will fail. So, remember to change this when you need to import more than 1 lists from Trello.
 - Some general information
     - youtrack.subsystem
     - users
