@@ -1,4 +1,5 @@
 # coding=UTf-8
+import xml.sax.saxutils
 from datetime import datetime
 import requests
 
@@ -110,18 +111,35 @@ class YouTrack:
 
     @staticmethod
     def _field_string(name, *value):
+        values = []
+        for single_value in value:
+            try:
+                values.append(
+                    '   <value>%s</value>' % (
+                        xml.sax.saxutils.escape(unicode(single_value).encode('utf-8'))
+                    )
+                )
+            except Exception:
+                print(single_value)
+                raise
+
         return (
             '<field name="%s">' % (name,) +
-            '\n'.join('   <value>%s</value>' % (single_value, ) for single_value in value) +
+            '\n'.join(values).decode('utf-8') +
             '</field>'
         )
 
     @staticmethod
     def _comments_fields(card):
         return (
-            '\n'.join('<comment author="%s" text="%s" created="%s"/>' %
-                      (comment["author"], comment["text"].replace('"', '\''), YouTrack.time_to_epoch(comment["created"]))
-                      for comment in card["comments"])
+            '\n'.join(
+                '<comment author="%s" text="%s" created="%s"/>' % (
+                    comment["author"],
+                    xml.sax.saxutils.escape(comment["text"].replace('"', '\'')),
+                    YouTrack.time_to_epoch(comment["created"]),
+                )
+                for comment in card["comments"]
+            )
         )
 
     @staticmethod
