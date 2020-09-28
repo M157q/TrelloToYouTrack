@@ -21,6 +21,7 @@ def main():
         if users:
             print 'Loading users from trello...'
             trello_users = trello_client.get_users()
+            print(trello_users)
             print '√ Done loading users\n'
 
             print 'Importing users to Youtrack...'
@@ -29,6 +30,7 @@ def main():
 
         print 'Loading cards from trello...'
         trello_cards = trello_client.get_cards()
+        print(trello_cards)
         print '√ Done loading cards\n'
 
         print 'Importing issues to Youtrack...'
