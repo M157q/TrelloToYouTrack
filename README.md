@@ -39,6 +39,7 @@ where values are the keys and the values are object containing the conditions, c
         - trello.name
         - trello.desc
         - trello.closed
+    - Modify 'specs.json' for adding your own `youtrack.state` and `youtrack.type`.
 
 How to run:
 
